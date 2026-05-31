@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TavernBrawl</title>
+<link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700;900&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-dark: #0d0a07;
+    --bg-card: #1a1208;
+    --parchment: #c9a96e;
+    --parchment-dark: #9a7340;
+    --gold: #e8c85a;
+    --gold-bright: #ffd700;
+    --red: #c0392b;
+    --red-bright: #e74c3c;
+    --blood: #7a1a1a;
+    --green: #2d7a2d;
+    --green-bright: #3d9c3d;
+    --coin: #d4a017;
+    --coin-dark: #a07010;
+    --text-light: #f0e6cc;
+    --text-dim: #9a8060;
+    --border: #4a3520;
+    --border-glow: #c9a96e44;
+    --shadow: #00000088;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--bg-dark);
+    background-image:
+      radial-gradient(ellipse at 20% 20%, #2a1a0a33 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, #1a0a0a33 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Crect width='60' height='60' fill='none'/%3E%3Ccircle cx='30' cy='30' r='1' fill='%23ffffff08'/%3E%3Ccircle cx='5' cy='5' r='0.5' fill='%23ffffff05'/%3E%3Ccircle cx='55' cy='55' r='0.5' fill='%23ffffff05'/%3E%3C/svg%3E");
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'IM Fell English', serif;
+    color: var(--text-light);
+    padding: 0 0 40px 0;
+    overflow-x: hidden;
+  }
+
+  /* ─── HEADER ─── */
+  .site-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 20px 14px;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, #1a0e04 0%, transparent 100%);
+  }
+
+  .site-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    font-size: clamp(1.5rem, 5vw, 2.4rem);
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    text-shadow: 0 0 20px #e8c85a66, 0 2px 4px #00000099;
+    text-transform: uppercase;
+  }
+
+  .rules-btn {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: 1.5px solid var(--parchment-dark);
+    color: var(--parchment);
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+  .rules-btn:hover {
+    background: var(--parchment-dark);
+    color: var(--bg-dark);
+    box-shadow: 0 0 12px var(--border-glow);
+  }
+
+  /* ─── MAIN CARD ─── */
+  .player-card {
+    margin-top: 28px;
+    width: min(420px, 94vw);
+    background: linear-gradient(160deg, #201508 0%, #120c04 100%);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    box-shadow: 0 8px 40px #00000088, inset 0 0 60px #ffffff04;
+    padding: 28px 24px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .player-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  /* corner decorations */
+  .player-card::after {
+    content: '✦';
+    position: absolute;
+    top: 10px; right: 14px;
+    font-size: 0.7rem;
+    color: var(--parchment-dark);
+    opacity: 0.5;
+  }
+
+  /* ─── NAME ─── */
+  .name-wrapper {
+    text-align: center;
+    position: relative;
+  }
+
+  .corner-deco {
+    position: absolute;
+    color: var(--parchment-dark);
+    font-size: 0.6rem;
+    opacity: 0.4;
+  }
+  .corner-deco.tl { top: 0; left: 0; }
+  .corner-deco.tr { top: 0; right: 0; }
+
+  .name-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.25em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .name-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    color: var(--parchment);
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.2rem, 4vw, 1.6rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-align: center;
+    width: 100%;
+    padding: 4px 8px;
+    outline: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .name-input:focus {
+    border-bottom-color: var(--gold);
+    color: var(--gold);
+  }
+  .name-input::placeholder { color: var(--border); }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--border);
+    font-size: 0.7rem;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ─── STAT BLOCK ─── */
+  .stat-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .stat-label-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .stat-icon { font-size: 1.1rem; }
+
+  .stat-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .counter-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .counter-btn {
+    width: 52px;
+    height: 64px;
+    border: 1px solid var(--border);
+    background: linear-gradient(180deg, #2a1a0c 0%, #1a0e06 100%);
+    color: var(--text-dim);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    -webkit-user-select: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .counter-btn:active { transform: scale(0.93); }
+
+  .counter-btn.minus {
+    border-radius: 4px 0 0 4px;
+    border-right: none;
+  }
+  .counter-btn.plus {
+    border-radius: 0 4px 4px 0;
+    border-left: none;
+  }
+
+  /* HP buttons */
+  .hp-btn.minus:hover { background: linear-gradient(180deg, #4a1a1a 0%, #2a0d0d 100%); color: var(--red-bright); border-color: var(--blood); }
+  .hp-btn.plus:hover  { background: linear-gradient(180deg, #1a3a1a 0%, #0d2a0d 100%); color: var(--green-bright); border-color: var(--green); }
+
+  /* Coin buttons */
+  .coin-btn.minus:hover { background: linear-gradient(180deg, #3a2a0a 0%, #201606 100%); color: var(--gold-bright); border-color: var(--coin-dark); }
+  .coin-btn.plus:hover  { background: linear-gradient(180deg, #3a2a0a 0%, #201606 100%); color: var(--gold-bright); border-color: var(--coin-dark); }
+
+  .counter-display {
+    width: 100px;
+    height: 64px;
+    background: linear-gradient(180deg, #0d0804 0%, #180f06 100%);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    font-size: 2rem;
+    letter-spacing: 0.04em;
+    transition: color 0.2s, text-shadow 0.2s;
+    position: relative;
+  }
+
+  .counter-display.hp-display { color: var(--red-bright); text-shadow: 0 0 16px #e74c3c55; }
+  .counter-display.coin-display { color: var(--gold); text-shadow: 0 0 16px #e8c85a55; }
+
+  .counter-display.bump {
+    animation: bump 0.18s ease-out;
+  }
+
+  @keyframes bump {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.18); }
+    100% { transform: scale(1); }
+  }
+
+  /* ─── RULES MODAL ─── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #00000099;
+    backdrop-filter: blur(3px);
+    z-index: 100;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    margin-top: 60px;
+    width: min(460px, 96vw);
+    background: linear-gradient(160deg, #23160a 0%, #140c04 100%);
+    border: 1px solid var(--parchment-dark);
+    border-radius: 6px;
+    box-shadow: 0 20px 60px #000000cc, 0 0 40px #c9a96e22;
+    padding: 32px 28px 28px;
+    position: relative;
+    animation: slideIn 0.25s ease-out;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  @keyframes slideIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to   { transform: translateY(0);     opacity: 1; }
+  }
+
+  .modal-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .modal-subtitle {
+    font-style: italic;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .modal hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 14px 0;
+  }
+
+  .rules-section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--parchment-dark);
+    margin-bottom: 8px;
+  }
+
+  .rules-text {
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: var(--text-light);
+    opacity: 0.88;
+  }
+
+  .rules-text li {
+    margin-left: 18px;
+    margin-bottom: 5px;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 14px; right: 16px;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 1rem;
+    width: 30px; height: 30px;
+    cursor: pointer;
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .close-btn:hover { border-color: var(--parchment-dark); color: var(--parchment); }
+
+  /* ─── FOOTER ─── */
+  .card-footer {
+    text-align: center;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    color: var(--border);
+    font-family: 'Cinzel', serif;
+    text-transform: uppercase;
+    margin-top: -10px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── HEADER ─── -->
+<header class="site-header">
+  <span class="site-title">⚔ TavernBrawl ⚔</span>
+  <button class="rules-btn" onclick="openModal()">📜 Rules</button>
+</header>
+
+<!-- ─── PLAYER CARD ─── -->
+<div class="player-card">
+
+  <!-- Name -->
+  <div class="name-wrapper">
+    <div class="corner-deco tl">✦</div>
+    <div class="corner-deco tr">✦</div>
+    <div class="name-label">Adventurer Name</div>
+    <input class="name-input" id="playerName" type="text" maxlength="24" placeholder="Enter your name…" value="Brave Hero">
+  </div>
+
+  <!-- HP -->
+  <div class="stat-block">
+    <div class="stat-label-row">
+      <span class="stat-icon">❤️</span>
+      <span class="stat-label">Life Points</span>
+    </div>
+    <div class="counter-row">
+      <button class="counter-btn minus hp-btn" onclick="change('hp', -1)" aria-label="Decrease HP">−</button>
+      <div class="counter-display hp-display" id="hpDisplay">20</div>
+      <button class="counter-btn plus hp-btn" onclick="change('hp', +1)" aria-label="Increase HP">+</button>
+    </div>
+  </div>
+
+  <div class="divider">⬥</div>
+
+  <!-- Coins -->
+  <div class="stat-block">
+    <div class="stat-label-row">
+      <span class="stat-icon">🪙</span>
+      <span class="stat-label">Coins</span>
+    </div>
+    <div class="counter-row">
+      <button class="counter-btn minus coin-btn" onclick="change('coin', -1)" aria-label="Decrease Coins">−</button>
+      <div class="counter-display coin-display" id="coinDisplay">1</div>
+      <button class="counter-btn plus coin-btn" onclick="change('coin', +1)" aria-label="Increase Coins">+</button>
+    </div>
+  </div>
+
+  <div class="card-footer">May fortune favour the bold</div>
+</div>
+
+<!-- ─── RULES MODAL ─── -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeOnBackdrop(event)">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal()">✕</button>
+    <div class="modal-title">📜 TavernBrawl</div>
+    <div class="modal-subtitle">Rules of the Brawl</div>
+    <hr>
+
+    <div class="rules-section-title">⚔ Objective</div>
+    <p class="rules-text">Be the last adventurer standing. Reduce your opponents' Life Points to zero while keeping your own above the abyss.</p>
+
+    <hr>
+
+    <div class="rules-section-title">❤️ Life Points</div>
+    <p class="rules-text">Each player starts with <strong style="color:var(--red-bright)">20 Life Points</strong>. When attacked, reduce your HP using the − button. When healed, use the + button. A player whose HP reaches <strong style="color:var(--red-bright)">0</strong> is eliminated from the brawl.</p>
+
+    <hr>
+
+    <div class="rules-section-title">🪙 Coins</div>
+    <p class="rules-text">Coins are your currency for power. You start with <strong style="color:var(--gold)">1 Coin</strong> each round. Spend coins to:</p>
+    <ul class="rules-text" style="margin-top:6px">
+      <li>Purchase items from the Tavern row</li>
+      <li>Hire mercenaries to fight for you</li>
+      <li>Upgrade your Tavern Tier for stronger cards</li>
+    </ul>
+
+    <hr>
+
+    <div class="rules-section-title">🍺 The Tavern</div>
+    <p class="rules-text">Each round, a fresh selection of cards appears in the Tavern. Recruit them to build your board. On your turn, fight a random opponent — the winner deals damage equal to their surviving minions' Attack.</p>
+
+    <hr>
+
+    <div class="rules-section-title">👑 Victory</div>
+    <p class="rules-text">The last hero with Life Points remaining claims the glory of the Tavern and a round of free ale. <em>May your dice roll true.</em></p>
+  </div>
+</div>
+
+<script>
+  const state = { hp: 20, coin: 1 };
+
+  function change(stat, delta) {
+    if (stat === 'hp') {
+      state.hp = Math.max(0, state.hp + delta);
+      const el = document.getElementById('hpDisplay');
+      el.textContent = state.hp;
+      triggerBump(el);
+    } else {
+      state.coin = Math.max(0, state.coin + delta);
+      const el = document.getElementById('coinDisplay');
+      el.textContent = state.coin;
+      triggerBump(el);
+    }
+  }
+
+  function triggerBump(el) {
+    el.classList.remove('bump');
+    void el.offsetWidth; // reflow
+    el.classList.add('bump');
+  }
+
+  function openModal()  { document.getElementById('modalOverlay').classList.add('open'); }
+  function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+  function closeOnBackdrop(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
+</script>
+</body>
+</html>
