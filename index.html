@@ -446,33 +446,90 @@
     <div class="modal-subtitle">Rules of the Brawl</div>
     <hr>
 
-    <div class="rules-section-title">⚔ Objective</div>
-    <p class="rules-text">Be the last adventurer standing. Reduce your opponents' Life Points to zero while keeping your own above the abyss.</p>
+    <div class="rules-section-title">Official Rulebook</div>
+    <p class="rules-text"><strong>📜 Objective of the Game</strong><br>Survive the chaos. Eliminate all other players using attacks, quests, and underhanded tactics. The last player standing alive wins the game.</p>
 
     <hr>
 
-    <div class="rules-section-title">❤️ Life Points</div>
-    <p class="rules-text">Each player starts with <strong style="color:var(--red-bright)">20 Life Points</strong>. When attacked, reduce your HP using the − button. When healed, use the + button. A player whose HP reaches <strong style="color:var(--red-bright)">0</strong> is eliminated from the brawl.</p>
+    <div class="rules-section-title">⚙️ Game Setup</div>
+    <ol class="rules-text" style="margin-top:6px; padding-left: 18px;">
+      <li>Player Count: 4 to 10 players.</li>
+      <li>Starting Stats: Each player starts with 15 HP and 2 Coins.</li>
+      <li>Starting Hand: Shuffle the main deck and deal 5 cards face-down to each player.</li>
+      <li>Hand Limit: The maximum hand size is normally 5 cards.</li>
+      <li>Shop Setup: Shuffle the Shop Deck separately. Deal 5 cards face-up to the center of the table to form the active Shop Rotation.</li>
+    </ol>
 
     <hr>
 
-    <div class="rules-section-title">🪙 Coins</div>
-    <p class="rules-text">Coins are your currency for power. You start with <strong style="color:var(--gold)">1 Coin</strong> each round. Spend coins to:</p>
-    <ul class="rules-text" style="margin-top:6px">
-      <li>Purchase items from the Tavern row</li>
-      <li>Hire mercenaries to fight for you</li>
-      <li>Upgrade your Tavern Tier for stronger cards</li>
+    <div class="rules-section-title">🔄 Round Structure</div>
+    <p class="rules-text">The game is played in a series of rounds. Each round consists of Four Phases executed in order:</p>
+
+    <div class="rules-section-title">Phase 1: Income &amp; The Draft Pool</div>
+    <ul class="rules-text" style="margin-top:6px; padding-left: 18px;">
+      <li><strong>Income:</strong> Every living player receives 1 Coin from the bank.</li>
+      <li><strong>The Draft Pool:</strong> Draw cards from the top of the main deck and place them face-down in the center of the table. Draw 1 card for each living player, plus 1 extra card.</li>
+      <li><strong>Drafting:</strong> In clockwise order starting with the active player, each player chooses one card from this face-down center pool and adds it to their hand. The remaining unpicked card goes to the main deck discard pile.</li>
+    </ul>
+
+    <div class="rules-section-title">Phase 2: Player Turns (Clockwise)</div>
+    <p class="rules-text">Starting with the active player and moving clockwise, each player takes exactly one turn. On your turn, you may perform one action:</p>
+    <ul class="rules-text" style="margin-top:6px; padding-left: 18px;">
+      <li>Play an Initiative card from your hand (targeting yourself, another player, or the table).</li>
+      <li><strong>Quest Deployment:</strong> You may place one or multiple Quest cards face-down in front of you. Multiple Quests can be deployed at the exact same time. Placing Quests does not count as an action, allowing you to still play an Initiative card on that same turn.</li>
+      <li>Note: You can only play 1 card as your action on your turn. Response cards do not count as your turn's action.</li>
+    </ul>
+
+    <div class="rules-section-title">Phase 3: The Shop Phase</div>
+    <ul class="rules-text" style="margin-top:6px; padding-left: 18px;">
+      <li>Once every player has finished their turn, the Shop opens.</li>
+      <li>In clockwise order, players may spend their Coins to buy cards from the 5 face-up cards in the active rotation.</li>
+      <li>You may buy as many items as you can afford during your shop turn.</li>
+      <li><strong>Shop Cleanup:</strong> At the end of the phase, any unbought cards in the rotation are put into the Shop Deck discard pile. The Shop Deck is then reshuffled, and 5 new cards are dealt face-up to form the rotation for the next round.</li>
+    </ul>
+
+    <div class="rules-section-title">Phase 4: Round End</div>
+    <p class="rules-text">Check for hand limits (discard down to 5 if necessary). Pass the starting player token clockwise. A new round begins.</p>
+
+    <hr>
+
+    <div class="rules-section-title">👻 The Ghost &amp; Haunting System</div>
+    <p class="rules-text">Death is not the end. When your HP drops to 0, you are eliminated from the living but return immediately as a Ghost.</p>
+    <ul class="rules-text" style="margin-top:6px; padding-left: 18px;">
+      <li><strong>Haunting:</strong> You immediately haunt the specific player who dealt the killing blow to you.</li>
+      <li><strong>The Setup:</strong> Physically move and sit directly behind your killer. You are now allowed to look at their hand of cards and read their hidden quests.</li>
+      <li><strong>The Code of Silence:</strong> You cannot speak, whisper, or signal to the table about what cards or quests your killer is holding.</li>
+      <li><strong>Possession:</strong> Once per round during your killer's turn, you may choose to Possess them. When you activate Possession, you completely take over their action. You force them to play the exact card, make the exact choice, or target the exact player you desire for that turn.</li>
     </ul>
 
     <hr>
 
-    <div class="rules-section-title">🍺 The Tavern</div>
-    <p class="rules-text">Each round, a fresh selection of cards appears in the Tavern. Recruit them to build your board. On your turn, fight a random opponent — the winner deals damage equal to their surviving minions' Attack.</p>
+    <div class="rules-section-title">⚖️ The Voting System (Guilty / Not Guilty)</div>
+    <p class="rules-text">Certain cards (like File a report) instantly trigger a mandatory table-wide trial.</p>
+    <ol class="rules-text" style="margin-top:6px; padding-left: 18px;">
+      <li><strong>The Accusation:</strong> The player casting the card nominates a specific target player.</li>
+      <li><strong>The Debate:</strong> The table has 1 minute to argue the case. No hidden face-down Quests can be voluntarily shown during this time.</li>
+      <li><strong>The Vote:</strong> On a count of three, all living players (including the accuser and the accused) must vote simultaneously using a "thumbs up" for Guilty or "thumbs down" for Not Guilty.</li>
+      <li><strong>Resolution:</strong>
+        <ul class="rules-text" style="margin-top:6px; padding-left: 18px;">
+          <li><strong>Guilty Majority:</strong> The accused player suffers the card's penalty and must immediately reveal their face-down Quests to the table.</li>
+          <li><strong>Not Guilty Majority or Tie:</strong> The accuser suffers the card's penalty instead, and the accused player's cards remain safely hidden.</li>
+        </ul>
+      </li>
+    </ol>
 
     <hr>
 
-    <div class="rules-section-title">👑 Victory</div>
-    <p class="rules-text">The last hero with Life Points remaining claims the glory of the Tavern and a round of free ale. <em>May your dice roll true.</em></p>
+    <div class="rules-section-title">🃏 Card Types &amp; Core Keyword Guide</div>
+    <ul class="rules-text" style="margin-top:6px; padding-left: 18px;">
+      <li><strong>Initiative:</strong> Cards played normally on your turn during Phase 2.</li>
+      <li><strong>Response:</strong> Cards that can be played out of turn directly from your hand instantly when an event triggers them (e.g., being attacked or voted on).</li>
+      <li><strong>Passive:</strong> Cards that stay face-up on the table in front of you and provide an ongoing effect.</li>
+      <li><strong>DRINK:</strong> Specific cards that can be consumed for a benefit or discarded to power up other combat cards (like Drink toss).</li>
+      <li><strong>Quests:</strong> Hidden objectives placed face-down in front of you. The exact moment you meet the objective requirements, the card is turned face-up to immediately reveal it and permanently unlock its powerful Reward.</li>
+    </ul>
+
+    <p class="rules-text">If you are ready, I can help you write down the formal breakdown text for specific card edge-cases or design a printable quick-reference cheat sheet for the players.</p>
   </div>
 </div>
 
